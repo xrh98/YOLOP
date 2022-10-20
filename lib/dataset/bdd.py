@@ -1,5 +1,6 @@
 import numpy as np
 import json
+import os
 
 from .AutoDriveDataset import AutoDriveDataset
 from .convert import convert, id_dict, id_dict_single
@@ -29,11 +30,15 @@ class BddDataset(AutoDriveDataset):
         print('building database...')
         gt_db = []
         height, width = self.shapes
-        for mask in tqdm(list(self.mask_list)):
-            mask_path = str(mask)
-            label_path = mask_path.replace(str(self.mask_root), str(self.label_root)).replace(".png", ".json")
-            image_path = mask_path.replace(str(self.mask_root), str(self.img_root)).replace(".png", ".jpg")
-            lane_path = mask_path.replace(str(self.mask_root), str(self.lane_root))
+        for idx, label in enumerate(tqdm(list(self.label_list))):
+            if idx > 1000:
+                break
+            label_path = str(label)
+            image_path = label_path.replace(str(self.label_root), str(self.img_root)).replace(".json", ".jpg")
+            mask_path = label_path.replace(str(self.label_root), str(self.mask_root)).replace(".json", ".png")
+            lane_path = label_path.replace(str(self.label_root), str(self.lane_root)).replace(".json", ".png")
+            if not os.path.exists(image_path):
+                continue
             with open(label_path, 'r') as f:
                 label = json.load(f)
             data = label['frames'][0]['objects']

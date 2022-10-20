@@ -5,7 +5,7 @@ from yacs.config import CfgNode as CN
 _C = CN()
 
 _C.LOG_DIR = 'runs/'
-_C.GPUS = (0,1)     
+_C.GPUS = (0,)     
 _C.WORKERS = 8
 _C.PIN_MEMORY = False
 _C.PRINT_FREQ = 20
@@ -50,10 +50,17 @@ _C.LOSS.LL_IOU_GAIN = 0.2 # lane line iou loss gain
 
 # DATASET related params
 _C.DATASET = CN(new_allowed=True)
-_C.DATASET.DATAROOT = '/mnt/f/DATASET/bdd100k_yolop'     # the path of images folder
-_C.DATASET.LABELROOT = '/mnt/f/DATASET/bdd100k_yolop/det_annotations'      # the path of det_annotations folder
-_C.DATASET.MASKROOT = '/mnt/f/DATASET/bdd100k_yolop/da_seg_annotations'    # the path of da_seg_annotations folder
-_C.DATASET.LANEROOT = '/mnt/f/DATASET/bdd100k_yolop/ll_seg_annotations'    # the path of ll_seg_annotations folder
+
+# _C.DATASET.DATAROOT = '/mnt/f/DATASET/bdd100k_yolop/images'     # the path of images folder
+# _C.DATASET.LABELROOT = '/mnt/f/DATASET/bdd100k_yolop/det_annotations'      # the path of det_annotations folder
+# _C.DATASET.MASKROOT = '/mnt/f/DATASET/bdd100k_yolop/da_seg_annotations'    # the path of da_seg_annotations folder
+# _C.DATASET.LANEROOT = '/mnt/f/DATASET/bdd100k_yolop/ll_seg_annotations'    # the path of ll_seg_annotations folder
+
+_C.DATASET.DATAROOT = '/home/xrh/works/DATASET/bdd100k_yolop/images'     # the path of images folder
+_C.DATASET.LABELROOT = '/home/xrh/works/DATASET/bdd100k_yolop/det_annotations'      # the path of det_annotations folder
+_C.DATASET.MASKROOT = '/home/xrh/works/DATASET/bdd100k_yolop/da_seg_annotations'    # the path of da_seg_annotations folder
+_C.DATASET.LANEROOT = '/home/xrh/works/DATASET/bdd100k_yolop/ll_seg_annotations'    # the path of ll_seg_annotations folder
+
 _C.DATASET.DATASET = 'BddDataset'
 _C.DATASET.TRAIN_SET = 'train'
 _C.DATASET.TEST_SET = 'val'
@@ -90,10 +97,10 @@ _C.TRAIN.GAMMA1 = 0.99
 _C.TRAIN.GAMMA2 = 0.0
 
 _C.TRAIN.BEGIN_EPOCH = 0
-_C.TRAIN.END_EPOCH = 240
+_C.TRAIN.END_EPOCH = 10
 
-_C.TRAIN.VAL_FREQ = 1
-_C.TRAIN.BATCH_SIZE_PER_GPU =24
+_C.TRAIN.VAL_FREQ = 2
+_C.TRAIN.BATCH_SIZE_PER_GPU =32 # default 24
 _C.TRAIN.SHUFFLE = True
 
 _C.TRAIN.IOU_THRESHOLD = 0.2
